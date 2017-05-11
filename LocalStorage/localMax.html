@@ -11,6 +11,7 @@
 		localStorage.setItem("nombre", "asdas");
 
 		document.getElementById("contenedor").innerHTML=localStorage.getItem("nombre");
+        
         var dni=document.getElementById("dni").value;
         var nom=document.getElementById("nombre").value;
         var apell=document.getElementById("apellido").value;
@@ -25,8 +26,8 @@
             var apellido=document.getElementById("apellido").value;
             
             var persona = [dni, nombre, apellido];                 
-            
-            if(false/*localStorage.getItem("datosPersona").length!=0*/)
+            x.innerHTML="Se detuvo el proceso";
+            if(localStorage.getItem("datosPersona").length==0)
              {      
                  x.innerHTML="Se detuvo el proceso";
                  
@@ -77,7 +78,6 @@
             }
             x.innerHTML="Lista de personas"+persona;
         }
-        function 
         
 	</script>
 	
