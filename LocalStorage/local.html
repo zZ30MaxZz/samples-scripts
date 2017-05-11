@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="contenedor"></div>
+
+	<script>
+		localStorage.setItem("nombre", "asdas");
+
+		document.getElementById("contenedor").innerHTML=localStorage.getItem("nombre");
+        var dni=document.getElementById("dni").value;
+        var nom=document.getElementById("nombre").value;
+        var apell=document.getElementById("apellido").value;
+        
+       
+        function salida()
+        {
+            var x=document.getElementById("salida");
+                 
+                 var dni=document.getElementById("dni").value;
+                 var nombre=document.getElementById("nombre").value;
+                 var apellido=document.getElementById("apellido").value;
+            
+            if(true/*localStorage.getItem("datosPersona").length!=0*/)
+             {
+                 
+                 
+                 
+                 
+                 x.innerHTML="Se detuvo el proceso";
+                 
+                 var persona = [dni, nombre, apellido];
+                 var array = [];
+                 array.push(persona);
+                 var cadena = JSON.stringify(array);
+                                  
+                 
+                 localStorage.setItem("datosPersona", cadena);
+                 
+                 x.innerHTML="Hay un elemento guardado"+"-"+cadena;
+             }
+            else
+            {
+                
+                
+            }
+            
+        }
+        
+	</script>
+	
+	
+	DNI:<input id="dni" type="text"><br>
+	NOMBRE<input id="nombre" type="text"><br>
+	APELLIDO<input id="apellido" type="text"><br>
+	
+	<input type="button" value="Obtener posición" onclick="getLocation();"><br>
+	<input type="button" value="agregar" onclick="salida();">
+
+	<p id="demo"></p>
+	<p id="salida"></p>
+
+	<script>
+		var x=document.getElementById("demo");
+
+		function getLocation()
+		{
+			navigator.geolocation.getCurrentPosition(showPosition);
+		}
+
+		function showPosition(position)
+		{
+			x.innerHTML="Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude;
+		}
+	</script>
+</body>
+</html>
