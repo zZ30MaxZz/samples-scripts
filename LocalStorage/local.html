@@ -16,27 +16,23 @@
         var apell=document.getElementById("apellido").value;
         
        
-        function salida()
+        function Salida()
         {
             var x=document.getElementById("salida");
-                 
-                 var dni=document.getElementById("dni").value;
-                 var nombre=document.getElementById("nombre").value;
-                 var apellido=document.getElementById("apellido").value;
+            
+            var dni=document.getElementById("dni").value;
+            var nombre=document.getElementById("nombre").value;
+            var apellido=document.getElementById("apellido").value;
+            
+            var persona = [dni, nombre, apellido];                 
             
             if(true/*localStorage.getItem("datosPersona").length!=0*/)
-             {
-                 
-                 
-                 
-                 
+             {      
                  x.innerHTML="Se detuvo el proceso";
                  
-                 var persona = [dni, nombre, apellido];
                  var array = [];
                  array.push(persona);
                  var cadena = JSON.stringify(array);
-                                  
                  
                  localStorage.setItem("datosPersona", cadena);
                  
@@ -44,10 +40,37 @@
              }
             else
             {
+                x.innerHTML="Se detuvo el proceso";
+                
+                var cadena = localStorage.getItem("datosPersona")
+                var array = JSON.parse(cadena);
+                
+                x.innerHTML="Hay un elemento guardado"+"-";
+                
                 
                 
             }
             
+        }
+        
+        function Listar()
+        {
+            var x=document.getElementById("salida");
+            var outs="";
+            if(true)
+            {
+                x.innerHTML="Se detuvo el proceso";
+                var cadena = localStorage.getItem("datosPersona");
+                var array = JSON.parse(cadena);
+                
+                for (i=0;i<array.length;i++){
+                    outs += array[i][0];
+                    outs += array[i][1];
+                    outs += array[i][2];
+                }
+                
+            }
+            x.innerHTML="Hay un elemento guardado"+"-"+outs;
         }
         
 	</script>
@@ -58,7 +81,8 @@
 	APELLIDO<input id="apellido" type="text"><br>
 	
 	<input type="button" value="Obtener posición" onclick="getLocation();"><br>
-	<input type="button" value="agregar" onclick="salida();">
+	<input type="button" value="agregar" onclick="Salida();">
+	<input type="button" value="Listar" onclick="Listar();">
 
 	<p id="demo"></p>
 	<p id="salida"></p>
