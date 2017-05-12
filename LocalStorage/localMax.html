@@ -17,7 +17,7 @@
         var apell=document.getElementById("apellido").value;
         
        
-        function Salida()
+        function Agregar()
         {
             var x=document.getElementById("salida");
             
@@ -26,10 +26,14 @@
             var apellido=document.getElementById("apellido").value;
             
             var persona = [dni, nombre, apellido];                 
-            x.innerHTML="Se detuvo el proceso";
-            if(localStorage.getItem("datosPersona").length==0)
+            x.innerHTML="Se detuvo el proceso-Antes de Entrar";
+            if(dni=="" ||dni==null)
+                {
+                    
+                }
+            if(localStorage.getItem("datosPersona")==null)
              {      
-                 x.innerHTML="Se detuvo el proceso";
+                 x.innerHTML="Se detuvo el proceso-Inicial";
                  
                  var array = [];
                  array.push(persona);
@@ -41,7 +45,7 @@
              }
             else
             {
-                x.innerHTML="Se detuvo el proceso";
+                x.innerHTML="Se detuvo el proceso-Else";
                 
                 var cadena = localStorage.getItem("datosPersona")
                 
@@ -72,11 +76,78 @@
                 
                 for (i=0;i<array.length;i++)
                 { 
-                    persona+="<br>"+array[i][0]+"--"+array[i][1]+"--"+array[i][2];
+                    persona+="<br>"+array[i][0]+"--"+array[i][1]+"--"+array[i][2]+
+                        "<a onclick=\"Borrar('"+array[i][0]+"')\">   Borrar</a>"+
+                        "<a onclick=\"Editar('"+array[i][0]+"')\">   Editar</a>";
                 }
                 
             }
             x.innerHTML="Lista de personas"+persona;
+        }
+        function Borrar(dni)
+        {
+            var x=document.getElementById("salida");
+            
+            var persona="";
+            x.innerHTML="Se detuvo el proceso-Antes de Entrar";
+            if(true)
+            {
+                x.innerHTML="Se detuvo el proceso-Antes de leer";
+                var cadena = localStorage.getItem("datosPersona");
+                var array = JSON.parse(cadena);
+                
+                for (i=0;i<array.length;i++)
+                { 
+                    if(array[i][0]==dni)
+                       {
+                           array.splice(i, 1);                      
+                       }
+                }
+                
+                cadena = JSON.stringify(array);
+                
+                localStorage.setItem("datosPersona", cadena);
+                
+                
+            }
+            x.innerHTML="Persona Eliminada: <br>"+dni;
+            
+        }
+        function Editar(id)
+        {
+            var x=document.getElementById("salida");
+            
+            var dni="";
+            var nombre="";
+            var apellido="";
+            var pos;
+            var persona="";
+            
+            x.innerHTML="Se detuvo el proceso-Antes de Entrar";
+            if(true)
+            {
+                
+                var cadena = localStorage.getItem("datosPersona");
+                var array = JSON.parse(cadena);
+                
+                for (i=0;i<array.length;i++)
+                { 
+                    
+                    if(array[i][0]==id)
+                       {
+                           x.innerHTML="Se detuvo el proceso-Antes de leer";
+                           dni=array[i][0];
+                           nombre=array[i][1];
+                           apellido=array[i][2];
+                           pos=i;
+                       }
+                }                
+                
+            }
+            document.getElementById('dni').value=dni;
+            document.getElementById('nombre').value=nombre;
+            document.getElementById('apellido').value=apellido;
+            x.innerHTML="Persona Editada: <br>"+id+" en la posición:"+pos;
         }
         
 	</script>
@@ -86,12 +157,13 @@
 	NOMBRE<input id="nombre" type="text"><br>
 	APELLIDO<input id="apellido" type="text"><br>
 	
-	<input type="button" value="Obtener posición" onclick="getLocation();"><br>
-	<input type="button" value="agregar" onclick="Salida();">
-	<input type="button" value="Listar" onclick="Listar();">
+	<input type="button" name="dni" value="Obtener posición" onclick="getLocation();"><br>
+	<input type="button" name="nombre" value="Agregar" onclick="Agregar();">
+	<input type="button" name="apellido" value="Listar" onclick="Listar();">
 
 	<p id="demo"></p>
 	<p id="salida"></p>
+	
 
 	<script>
 		var x=document.getElementById("demo");
