@@ -26,39 +26,41 @@
             var apellido=document.getElementById("apellido").value;
             
             var persona = [dni, nombre, apellido];                 
-            x.innerHTML="Se detuvo el proceso-Antes de Entrar";
-            if(dni=="" ||dni==null)
+            
+            if(dni==""||dni.trim.length==0)
                 {
-                    
+                    x.innerHTML="Llena todos los campos";
                 }
-            if(localStorage.getItem("datosPersona")==null)
-             {      
-                 x.innerHTML="Se detuvo el proceso-Inicial";
-                 
-                 var array = [];
-                 array.push(persona);
-                 var cadena = JSON.stringify(array);
-                 
-                 localStorage.setItem("datosPersona", cadena);
-                 
-                 x.innerHTML="Hay un elemento guardado"+"-"+cadena;
-             }
             else
-            {
-                x.innerHTML="Se detuvo el proceso-Else";
+                {
+                    if(localStorage.getItem("datosPersona")==null)
+                    {
+                        x.innerHTML="Se detuvo el proceso-Inicial";
+                        var array = [];
+                        array.push(persona);
+                        var cadena = JSON.stringify(array);
+                        
+                        localStorage.setItem("datosPersona", cadena);
+                        
+                        x.innerHTML="Hay un elemento guardado"+"-"+cadena;
+                    }
+                    else
+                    {
+                        x.innerHTML="Se detuvo el proceso-Else";
+                        
+                        var cadena = localStorage.getItem("datosPersona");
+                        var array = JSON.parse(cadena);
+                        
+                        array.push(persona);
+                        
+                        cadena = JSON.stringify(array);
+                        
+                        localStorage.setItem("datosPersona", cadena);
+                        
+                        x.innerHTML="Hay un elemento guardado"+"-";
+                    }
+                }
                 
-                var cadena = localStorage.getItem("datosPersona")
-                
-                var array = JSON.parse(cadena);
-                
-                array.push(persona);
-                
-                cadena = JSON.stringify(array);
-                
-                localStorage.setItem("datosPersona", cadena);
-                
-                x.innerHTML="Hay un elemento guardado"+"-";
-            }
             
         }
         
