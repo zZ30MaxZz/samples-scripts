@@ -8,15 +8,7 @@
 	<div id="contenedor"></div>
 
 	<script>
-		localStorage.setItem("nombre", "asdas");
-
-		document.getElementById("contenedor").innerHTML=localStorage.getItem("nombre");
-        
-        var dni=document.getElementById("dni").value;
-        var nom=document.getElementById("nombre").value;
-        var apell=document.getElementById("apellido").value;
-        
-       
+		
         function Agregar()
         {
             var x=document.getElementById("salida");
@@ -29,35 +21,56 @@
             
             if(dni==""||dni.length==0||nombre==""||nombre.length==0||apellido==""||apellido.length==0)
                 {
-                    x.innerHTML="Llena todos los campos"+dni;
+                    x.innerHTML="Llena todos los campos";
                 }
             else
                 {
                     if(localStorage.getItem("datosPersona")==null)
                     {
-                        x.innerHTML="Se detuvo el proceso-Inicial";
+                        
                         var array = [];
                         array.push(persona);
                         var cadena = JSON.stringify(array);
                         
                         localStorage.setItem("datosPersona", cadena);
+                        Listar();
                         
-                        x.innerHTML="Hay un elemento guardado"+"-"+cadena;
                     }
                     else
                     {
-                        x.innerHTML="Se detuvo el proceso-Else";
-                        
                         var cadena = localStorage.getItem("datosPersona");
                         var array = JSON.parse(cadena);
                         
-                        array.push(persona);
+                        var pos=null;
+                        for (i=0;i<array.length;i++)
+                        {
+                            if(array[i][0]==dni)
+                            {
+                                pos=i;
+                            }
+                        } 
                         
-                        cadena = JSON.stringify(array);
                         
-                        localStorage.setItem("datosPersona", cadena);
+                        if(pos!=null)
+                            {
+                                array[pos][1]=nombre;
+                                array[pos][2]=apellido;
+                                
+                                cadena = JSON.stringify(array);
+                                
+                                localStorage.setItem("datosPersona", cadena);
+                                Listar();
+                            }
+                        else
+                            {
+                                array.push(persona);
+                                cadena = JSON.stringify(array);
+                                
+                                localStorage.setItem("datosPersona", cadena);
+                                Listar();
+                            }
                         
-                        x.innerHTML="Hay un elemento guardado"+"-";
+                        
                     }
                 }
                 
@@ -74,27 +87,26 @@
             {
                 x.innerHTML="Se detuvo el proceso";
                 var cadena = localStorage.getItem("datosPersona");
-                var array = JSON.parse(cadena);
                 
-                for (i=0;i<array.length;i++)
-                { 
-                    persona+="<br>"+array[i][0]+"--"+array[i][1]+"--"+array[i][2]+
-                        "<a href='#' onclick=\"Borrar('"+array[i][0]+"')\">   Borrar</a>"+
-                        "<a href='#' onclick=\"Editar('"+array[i][0]+"')\">   Editar</a>";
-                }
-                
+                if(cadena!=null)
+                    {
+                        var array = JSON.parse(cadena);
+                        for (i=0;i<array.length;i++)
+                        {
+                            persona+="<br>"+array[i][0]+"--"+array[i][1]+"--"+array[i][2]+
+                                "<a href='#' onclick=\"Borrar('"+array[i][0]+"')\">   Borrar</a>"+
+                                "<a href='#' onclick=\"Editar('"+array[i][0]+"')\">   Editar</a>";
+                        }
+                    }
+                x.innerHTML="DNI---NOMBRE-----APELLIDO"+persona;
             }
-            x.innerHTML="Lista de personas"+persona;
         }
         function Borrar(dni)
         {
-            var x=document.getElementById("salida");
-            
             var persona="";
-            x.innerHTML="Se detuvo el proceso-Antes de Entrar";
+            
             if(true)
             {
-                x.innerHTML="Se detuvo el proceso-Antes de leer";
                 var cadena = localStorage.getItem("datosPersona");
                 var array = JSON.parse(cadena);
                 
@@ -112,20 +124,17 @@
                 
                 
             }
-            x.innerHTML="Persona Eliminada: <br>"+dni;
+            Listar();
             
         }
         function Editar(id)
         {
-            var x=document.getElementById("salida");
-            
+        
             var dni="";
             var nombre="";
             var apellido="";
-            var pos;
             var persona="";
             
-            x.innerHTML="Se detuvo el proceso-Antes de Entrar";
             if(true)
             {
                 
@@ -137,21 +146,16 @@
                     
                     if(array[i][0]==id)
                        {
-                           x.innerHTML="Se detuvo el proceso-Antes de leer";
-                           dni=array[i][0];
-                           nombre=array[i][1];
-                           apellido=array[i][2];
-                           pos=i;
+                           document.getElementById('dni').value=array[i][0];
+                           document.getElementById('nombre').value=array[i][1];
+                           document.getElementById('apellido').value=array[i][2];
                        }
                 }                
                 
             }
-            document.getElementById('dni').value=dni;
-            document.getElementById('nombre').value=nombre;
-            document.getElementById('apellido').value=apellido;
-            x.innerHTML="Persona Editada: <br>"+id+" en la posición:"+pos;
         }
         
+	
 	</script>
 	
 	
@@ -159,26 +163,12 @@
 	NOMBRE<input id="nombre" type="text"><br>
 	APELLIDO<input id="apellido" type="text"><br>
 	
-	<input type="button" name="dni" value="Obtener posición" onclick="getLocation();"><br>
 	<input type="button" name="nombre" value="Agregar" onclick="Agregar();">
-	<input type="button" name="apellido" value="Listar" onclick="Listar();">
 
-	<p id="demo"></p>
+
 	<p id="salida"></p>
 	
 
-	<script>
-		var x=document.getElementById("demo");
-
-		function getLocation()
-		{
-			navigator.geolocation.getCurrentPosition(showPosition);
-		}
-
-		function showPosition(position)
-		{
-			x.innerHTML="Latitude: " + position.coords.latitude + "<br>Longitude: " + position.coords.longitude;
-		}
-	</script>
+	
 </body>
 </html>
