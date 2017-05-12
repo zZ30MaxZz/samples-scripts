@@ -21,15 +21,15 @@
         {
             var x=document.getElementById("salida");
             
-            var dni=document.getElementById("dni").value;
-            var nombre=document.getElementById("nombre").value;
-            var apellido=document.getElementById("apellido").value;
+            var dni=document.getElementById("dni").value.trim();
+            var nombre=document.getElementById("nombre").value.trim();
+            var apellido=document.getElementById("apellido").value.trim();
             
             var persona = [dni, nombre, apellido];                 
             
-            if(dni==""||dni.trim.length==0)
+            if(dni==""||dni.length==0||nombre==""||nombre.length==0||apellido==""||apellido.length==0)
                 {
-                    x.innerHTML="Llena todos los campos";
+                    x.innerHTML="Llena todos los campos"+dni;
                 }
             else
                 {
